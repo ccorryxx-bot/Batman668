@@ -1,0 +1,117 @@
+/* ============================================================
+   BASE.CSS — Design Tokens, Reset, Typography, Scrollbar
+   Batman688 Mobile Gaming Platform
+   ============================================================ */
+
+/* ── Design Tokens ── */
+:root {
+  --bg-primary:     #121212;
+  --bg-secondary:   #1d1e20;
+  --bg-card:        #2b2c2e;
+  --gold:           #ecbf24;
+  --gold-light:     #f9ec31;
+  --text-primary:   #ffffff;
+  --text-secondary: #bbbdbf;
+  --text-muted:     #666666;
+  --accent-purple:  #c700f8;
+  --notice-bg:      rgba(0, 136, 170, 0.21);
+  --notice-text:    #0088aa;
+  --input-border:   #DCDCE9;
+  --success:        #4ade80;
+  --danger:         #f87171;
+  --btn-gradient:   linear-gradient(180deg, #434343 0%, #212121 100%);
+  --gold-gradient:  linear-gradient(180deg, #ffe566 0%, #ecbf24 50%, #b8860b 100%);
+  --radius-sm:      5px;
+  --radius-md:      10px;
+  --radius-lg:      20px;
+  --transition:     all 0.25s ease;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Base ── */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  outline: none;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar        { width: 3px; height: 3px; }
+::-webkit-scrollbar-track  { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb  { background: var(--gold); border-radius: 2px; }
+
+/* ── Gold text utility ── */
+.gold-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Gold accent divider ── */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--gold) 25%,
+    var(--gold-light) 50%,
+    var(--gold) 75%,
+    transparent 100%
+  );
+}
+
+/* ── Main capsule padding (above bottom nav) ── */
+#appCapsule {
+  padding-bottom: 62px;
+}
+
+/* ── Responsive: enforce max-width on larger screens ── */
+@media (min-width: 481px) {
+  body          { max-width: 480px; border-left: 1px solid #1e1e1e; border-right: 1px solid #1e1e1e; }
+  .bottom-nav   { max-width: 480px; }
+}
