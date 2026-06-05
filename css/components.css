@@ -1,0 +1,215 @@
+/* ============================================================
+   COMPONENTS.CSS — Game Grid, Cards, Wallet Bar, Category
+   Batman688 Mobile Gaming Platform
+   ============================================================ */
+
+/* ══════════════════════════════
+   GAME GRID
+══════════════════════════════ */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+/* Game Card */
+.game-card {
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  background: var(--bg-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.game-card:active {
+  transform: scale(0.93);
+}
+
+.game-card:hover img {
+  transform: scale(1.06);
+}
+
+/* Card gradient overlay */
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.72) 100%);
+  pointer-events: none;
+}
+
+/* Provider badge */
+.provider-badge {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 7.5px;
+  font-weight: 800;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+/* Placeholder card (no image) */
+.game-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.game-card-placeholder .ph-icon  { font-size: 28px; }
+.game-card-placeholder .ph-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+/* ══════════════════════════════
+   WALLET / QUICK LINKS BAR
+══════════════════════════════ */
+.wallet-bar {
+  background: var(--bg-primary);
+  padding: 10px 14px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.wallet-items {
+  display: flex;
+  gap: 14px;
+  min-width: max-content;
+}
+
+.wallet-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  flex: 0 0 52px;
+  transition: var(--transition);
+}
+
+.wallet-item:active { transform: scale(0.90); }
+
+.wallet-icon-box {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 2px 8px rgba(236,191,36,0.35);
+}
+
+.wallet-label {
+  font-size: 9px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+/* ══════════════════════════════
+   HORIZONTAL CATEGORY NAV
+   (Used if sidebar is collapsed)
+══════════════════════════════ */
+.category-hscroll {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.cat-h-item {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+  min-width: 58px;
+}
+
+.cat-h-item.active {
+  background: var(--gold);
+}
+
+.cat-h-icon {
+  width: 28px;
+  height: 28px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cat-h-label {
+  font-size: 9px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.cat-h-item.active .cat-h-label {
+  color: #000;
+  font-weight: 700;
+}
+
+/* ══════════════════════════════
+   EMPTY / LOADING STATE
+══════════════════════════════ */
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state .es-icon  { font-size: 40px; }
+.empty-state .es-text  { font-size: 13px; }
+
+/* ══════════════════════════════
+   RESPONSIVE ADJUSTMENTS
+══════════════════════════════ */
+@media (max-width: 360px) {
+  .game-grid          { gap: 3px; }
+  .category-sidebar   { flex: 0 0 56px; }
+  .cat-icon-wrap      { width: 32px; height: 32px; font-size: 16px; }
+}
