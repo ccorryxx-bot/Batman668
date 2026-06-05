@@ -1,0 +1,410 @@
+/* ============================================================
+   LAYOUT.CSS — Header, Banner, Action Row, Notice, Main Layout, Bottom Nav
+   Batman688 Mobile Gaming Platform
+   ============================================================ */
+
+/* ══════════════════════════════
+   APP HEADER
+══════════════════════════════ */
+.app-header {
+  background: var(--bg-primary);
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+/* Logo */
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-badge {
+  width: 42px;
+  height: 42px;
+  background: #0d0d1a;
+  border: 2px solid var(--gold);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.logo-badge svg { display: block; }
+
+.logo-text-wrap .logo-main {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.logo-text-wrap .logo-sub {
+  font-size: 8px;
+  color: var(--text-secondary);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Header action buttons */
+.header-actions {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.hdr-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 5px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  min-width: 36px;
+  transition: var(--transition);
+}
+
+.hdr-btn .icon-box {
+  width: 28px;
+  height: 28px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-card);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.hdr-btn:active .icon-box {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+/* ══════════════════════════════
+   BANNER CAROUSEL
+══════════════════════════════ */
+.banner-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #0a0a0a;
+}
+
+.banner-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.banner-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  aspect-ratio: 2.15 / 1;
+  overflow: hidden;
+}
+
+.banner-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dots */
+.banner-dots {
+  position: absolute;
+  bottom: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 5;
+}
+
+.b-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  padding: 0;
+}
+
+.b-dot.active {
+  background: var(--gold);
+  width: 18px;
+  border-radius: 3px;
+}
+
+/* ══════════════════════════════
+   ACTION ROW (Login btn + 4 icons)
+══════════════════════════════ */
+.action-row {
+  display: flex;
+  align-items: center;
+  padding: 9px 14px;
+  gap: 10px;
+  background: var(--bg-primary);
+}
+
+.login-btn {
+  flex-shrink: 0;
+  min-width: 88px;
+  height: 38px;
+  background: var(--btn-gradient);
+  color: var(--gold-light);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 0 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  transition: var(--transition);
+}
+
+.login-btn:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
+
+.action-icons {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.action-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+
+.action-icon-circle {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-card);
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--gold);
+  transition: var(--transition);
+}
+
+.action-icon-circle:active,
+.action-icon-item:active .action-icon-circle {
+  transform: scale(0.90);
+  background: rgba(236, 191, 36, 0.12);
+}
+
+.action-icon-label {
+  font-size: 8px;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.2;
+  max-width: 46px;
+}
+
+/* ══════════════════════════════
+   MARQUEE NOTICE BAR
+══════════════════════════════ */
+.notice-bar {
+  display: flex;
+  align-items: center;
+  padding: 6px 14px;
+  background: var(--notice-bg);
+  border-top: 1px solid rgba(0, 136, 170, 0.18);
+  border-bottom: 1px solid rgba(0, 136, 170, 0.18);
+  gap: 8px;
+  overflow: hidden;
+}
+
+.notice-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.notice-marquee {
+  overflow: hidden;
+  flex: 1;
+}
+
+.notice-text {
+  font-size: 11.5px;
+  color: var(--notice-text);
+  white-space: nowrap;
+  display: inline-block;
+  animation: marquee-scroll 24s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  0%   { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ══════════════════════════════
+   MAIN CONTENT (Sidebar + Grid)
+══════════════════════════════ */
+.main-content {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* ── Left Category Sidebar ── */
+.category-sidebar {
+  flex: 0 0 62px;
+  background: var(--bg-primary);
+  border-right: 1px solid #1a1a1a;
+  overflow-y: auto;
+  max-height: calc(100dvh - 175px);
+  position: sticky;
+  top: 63px;
+  align-self: flex-start;
+}
+
+.cat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 5px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: var(--transition);
+  min-height: 64px;
+}
+
+.cat-item.active {
+  background: linear-gradient(90deg, rgba(236,191,36,0.15) 0%, rgba(236,191,36,0.03) 100%);
+  border-left-color: var(--gold);
+}
+
+.cat-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: var(--transition);
+  font-size: 18px;
+}
+
+.cat-item.active .cat-icon-wrap {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  box-shadow: 0 2px 8px rgba(236,191,36,0.4);
+}
+
+.cat-label {
+  font-size: 8px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  word-break: break-word;
+}
+
+.cat-item.active .cat-label {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* ── Right Game Section ── */
+.game-section {
+  flex: 1;
+  padding: 6px;
+  min-width: 0;
+}
+
+/* ══════════════════════════════
+   BOTTOM NAVIGATION
+══════════════════════════════ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 0 10px;
+  box-shadow:
+    0 -4px 28px rgba(128, 220, 234, 0.22),
+    0 -1px 0 rgba(236,191,36,0.08);
+  z-index: 100;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 2px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.nav-icon {
+  font-size: 20px;
+  line-height: 1;
+  transition: var(--transition);
+}
+
+.nav-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.nav-item.active .nav-label {
+  color: var(--gold-light);
+}
+
+.nav-item.active .nav-icon {
+  filter: drop-shadow(0 0 5px var(--gold));
+}
+
+.nav-item:active {
+  transform: scale(0.9);
+}
