@@ -1,0 +1,341 @@
+/* ============================================================
+   MODALS.CSS — Bottom Sheet Modals: Login, Password, History, Summary, Game Log
+   Batman688 Mobile Gaming Platform
+   ============================================================ */
+
+/* ══════════════════════════════
+   MODAL OVERLAY & CONTAINER
+══════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 200;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+/* Animate in */
+.modal-overlay.show .modal-sheet {
+  animation: slideUp 0.32s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0.5; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Bottom Sheet ── */
+.modal-sheet {
+  background: var(--bg-secondary);
+  width: 100%;
+  max-width: 480px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  max-height: 90dvh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Drag handle */
+.modal-sheet::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 4px;
+  background: #444;
+  border-radius: 2px;
+  margin: 10px auto 0;
+}
+
+/* ── Modal Header ── */
+.modal-header {
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid #2e2e2e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  z-index: 10;
+}
+
+.modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.modal-close:hover  { background: rgba(236,191,36,0.1); }
+.modal-close:active { transform: rotate(90deg); }
+
+/* ── Modal Body ── */
+.modal-body {
+  padding: 16px;
+}
+
+/* ══════════════════════════════
+   FORM ELEMENTS
+══════════════════════════════ */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 2px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--input-border);
+  color: var(--text-primary);
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus {
+  border-bottom-color: var(--gold);
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Date input dark fix */
+input[type="date"].form-input {
+  color-scheme: dark;
+}
+
+/* Checkbox row */
+.form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.form-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+.form-checkbox label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+/* ── Primary gold button ── */
+.btn-primary {
+  width: 100%;
+  padding: 13px;
+  background: var(--gold);
+  color: #000;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 3px 12px rgba(236,191,36,0.35);
+}
+
+.btn-primary:hover  { background: #f0c850; }
+.btn-primary:active { transform: scale(0.97); opacity: 0.9; }
+
+/* ── Secondary (outline) button ── */
+.btn-secondary {
+  width: 100%;
+  padding: 11px;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 10px;
+}
+
+.btn-secondary:active { background: rgba(236,191,36,0.08); }
+
+/* ══════════════════════════════
+   DATA TABLES (History / Game Log)
+══════════════════════════════ */
+.data-table-wrap {
+  overflow-x: auto;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid #2a2a2a;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  color: var(--text-secondary);
+  min-width: 300px;
+}
+
+.data-table thead tr {
+  background: #252527;
+  border-bottom: 1px solid #333;
+}
+
+.data-table th {
+  padding: 9px 10px;
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--gold);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #252525;
+  vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+/* Status badges */
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-win  { background: rgba(74,222,128,0.15); color: var(--success); }
+.badge-lose { background: rgba(248,113,113,0.15); color: var(--danger);  }
+.badge-draw { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+
+/* Amount colors */
+.amount-plus  { color: var(--success); font-weight: 700; }
+.amount-minus { color: var(--danger);  font-weight: 700; }
+
+/* ══════════════════════════════
+   SUMMARY CARD GRID
+══════════════════════════════ */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.summary-card {
+  background: #252527;
+  border-radius: 10px;
+  padding: 14px 12px;
+  border: 1px solid #2e2e2e;
+}
+
+.summary-card .s-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.summary-card .s-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.summary-card .s-value.gold { color: var(--gold); }
+.summary-card .s-value.green { color: var(--success); }
+
+/* Full-width summary card */
+.summary-card.full {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Date filter row */
+.date-filter-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+/* Tab switcher inside modal */
+.modal-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #2e2e2e;
+  margin-bottom: 14px;
+}
+
+.modal-tab {
+  flex: 1;
+  padding: 10px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.modal-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
