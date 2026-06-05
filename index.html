@@ -3,883 +3,522 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#121212">
+  <meta name="description" content="Batman688 - Mobile Gaming Platform">
   <title>Batman688 - Gaming Platform</title>
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            gold: '#ecbf24',
-            goldLight: '#f9ec31',
-            darkBg: '#121212',
-            surfaceBg: '#1d1e20',
-            cardBg: '#2b2c2e',
-            noticeBlue: '#0088aa',
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-    html, body {
-      background: #121212;
-      color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      overflow-x: hidden;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    /* ─── Scrollbar ─── */
-    ::-webkit-scrollbar { width: 3px; height: 3px; }
-    ::-webkit-scrollbar-track { background: #121212; }
-    ::-webkit-scrollbar-thumb { background: #ecbf24; border-radius: 2px; }
-
-    /* ─── Gold text gradient ─── */
-    .gold-text {
-      background: linear-gradient(180deg, #ffe566 0%, #ecbf24 50%, #b8860b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ─── Header ─── */
-    .app-header {
-      background: #121212;
-      padding: 10px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      border-bottom: 1px solid #1e1e1e;
-    }
-
-    .header-logo {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .logo-batman {
-      width: 44px;
-      height: 44px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      border: 2px solid #ecbf24;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: 900;
-      color: #ecbf24;
-      letter-spacing: -1px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .logo-batman::before {
-      content: '';
-      position: absolute;
-      top: -2px; left: -2px; right: -2px; bottom: -2px;
-      background: linear-gradient(135deg, #ecbf24, #f9ec31, #ecbf24);
-      border-radius: 9px;
-      z-index: -1;
-    }
-
-    .logo-pg {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      line-height: 1;
-    }
-
-    .logo-batman-text {
-      font-size: 13px;
-      font-weight: 900;
-      color: #ecbf24;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .logo-pg-text {
-      font-size: 9px;
-      color: #bbbdbf;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-    }
-
-    .hdr-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      padding: 4px 6px;
-      background: transparent;
-      border: none;
-      color: #bbbdbf;
-      font-size: 9px;
-      cursor: pointer;
-      min-width: 38px;
-    }
-
-    .hdr-btn .icon-box {
-      width: 28px;
-      height: 28px;
-      background: #1d1e20;
-      border: 1px solid #2b2c2e;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-    }
-
-    /* ─── Banner Carousel ─── */
-    .banner-wrapper {
-      width: 100%;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .banner-track {
-      display: flex;
-      transition: transform 0.5s ease;
-      will-change: transform;
-    }
-
-    .banner-slide {
-      flex: 0 0 100%;
-      width: 100%;
-      aspect-ratio: 2.1 / 1;
-      overflow: hidden;
-    }
-
-    .banner-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .banner-dots {
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 5px;
-      z-index: 5;
-    }
-
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.4);
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .dot.active {
-      background: #ecbf24;
-      width: 16px;
-      border-radius: 3px;
-    }
-
-    /* ─── Action Row (Login + 4 icons) ─── */
-    .action-row {
-      display: flex;
-      align-items: center;
-      padding: 10px 14px;
-      gap: 8px;
-      background: #121212;
-    }
-
-    .login-btn {
-      flex: 0 0 auto;
-      min-width: 90px;
-      height: 36px;
-      background: linear-gradient(180deg, #434343 0%, #212121 100%);
-      color: #f9ec31;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 0 16px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-      transition: all 0.2s;
-    }
-
-    .login-btn:active { transform: scale(0.97); }
-
-    .action-icons {
-      display: flex;
-      flex: 1;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .action-icon-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      cursor: pointer;
-    }
-
-    .action-icon-circle {
-      width: 38px;
-      height: 38px;
-      background: #1d1e20;
-      border: 1px solid #2b2c2e;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      color: #ecbf24;
-      transition: all 0.2s;
-    }
-
-    .action-icon-circle:active { transform: scale(0.92); }
-
-    .action-icon-label {
-      font-size: 8.5px;
-      color: #bbbdbf;
-      text-align: center;
-      line-height: 1.2;
-      max-width: 48px;
-    }
-
-    /* ─── Marquee Notice ─── */
-    .notice-bar {
-      display: flex;
-      align-items: center;
-      padding: 7px 14px;
-      background: rgba(0, 136, 170, 0.12);
-      border-top: 1px solid rgba(0,136,170,0.15);
-      border-bottom: 1px solid rgba(0,136,170,0.15);
-      gap: 8px;
-      overflow: hidden;
-    }
-
-    .notice-icon {
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-
-    .notice-text {
-      font-size: 11.5px;
-      color: #0088aa;
-      white-space: nowrap;
-      animation: marquee 22s linear infinite;
-    }
-
-    @keyframes marquee {
-      0% { transform: translateX(100vw); }
-      100% { transform: translateX(-100%); }
-    }
-
-    /* ─── Main Content (Sidebar + Grid) ─── */
-    .main-content {
-      display: flex;
-      min-height: calc(100vh - 200px);
-      padding-bottom: 62px;
-    }
-
-    /* ─── Left Category Sidebar ─── */
-    .category-sidebar {
-      flex: 0 0 62px;
-      background: #121212;
-      border-right: 1px solid #1e1e1e;
-      overflow-y: auto;
-      max-height: calc(100vh - 200px);
-      position: sticky;
-      top: 60px;
-      align-self: flex-start;
-    }
-
-    .cat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      padding: 10px 4px;
-      cursor: pointer;
-      border-left: 3px solid transparent;
-      transition: all 0.2s;
-      min-height: 62px;
-    }
-
-    .cat-item.active {
-      background: linear-gradient(90deg, rgba(236,191,36,0.18) 0%, rgba(236,191,36,0.04) 100%);
-      border-left-color: #ecbf24;
-    }
-
-    .cat-icon-wrap {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: #2b2c2e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      transition: all 0.2s;
-    }
-
-    .cat-item.active .cat-icon-wrap {
-      background: linear-gradient(135deg, #ecbf24, #f9ec31);
-    }
-
-    .cat-icon-wrap img {
-      width: 22px;
-      height: 22px;
-      object-fit: contain;
-    }
-
-    .cat-icon-wrap .cat-emoji {
-      font-size: 18px;
-    }
-
-    .cat-label {
-      font-size: 8.5px;
-      color: #666;
-      text-align: center;
-      line-height: 1.2;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      word-break: break-word;
-    }
-
-    .cat-item.active .cat-label {
-      color: #ecbf24;
-      font-weight: 700;
-    }
-
-    /* ─── Game Grid ─── */
-    .game-section {
-      flex: 1;
-      padding: 6px;
-      overflow-y: auto;
-    }
-
-    .game-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px;
-    }
-
-    .game-card {
-      aspect-ratio: 1 / 1;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-      background: #2b2c2e;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .game-card:active {
-      transform: scale(0.95);
-    }
-
-    .game-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .game-card .card-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.7) 100%);
-      pointer-events: none;
-    }
-
-    .game-provider-badge {
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      font-size: 7.5px;
-      font-weight: 800;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      padding: 2px 5px;
-      border-radius: 3px;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(2px);
-      line-height: 1.3;
-    }
-
-    /* ─── Bottom Navigation ─── */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 480px;
-      height: 58px;
-      background: #1d1e20;
-      border-radius: 18px 18px 0 0;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 6px 0 10px;
-      box-shadow: 0 -4px 24px rgba(128, 220, 234, 0.25), 0 0 1px rgba(236,191,36,0.1);
-      z-index: 100;
-    }
-
-    .nav-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      cursor: pointer;
-      text-decoration: none;
-      padding: 4px 2px;
-      transition: all 0.2s;
-    }
-
-    .nav-icon {
-      font-size: 20px;
-      line-height: 1;
-    }
-
-    .nav-label {
-      font-size: 9.5px;
-      color: #777;
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-    }
-
-    .nav-item.active .nav-label {
-      color: #f9ec31;
-    }
-
-    .nav-item.active .nav-icon {
-      filter: drop-shadow(0 0 4px #ecbf24);
-    }
-
-    /* ─── Gold divider accent line ─── */
-    .gold-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #ecbf24 30%, #f9ec31 50%, #ecbf24 70%, transparent);
-      margin: 0;
-    }
-
-    /* ─── Responsive ─── */
-    @media (max-width: 360px) {
-      .category-sidebar { flex: 0 0 56px; }
-      .cat-icon-wrap { width: 32px; height: 32px; }
-      .game-grid { gap: 3px; }
-    }
-
-    @media (min-width: 481px) {
-      html, body { max-width: 480px; }
-      .bottom-nav { max-width: 480px; }
-    }
-  </style>
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/modals.css">
 </head>
 <body>
 
-  <!-- ═══════════════ HEADER ═══════════════ -->
-  <header class="app-header">
-    <div class="header-logo">
-      <div class="logo-batman">
-        <svg width="28" height="22" viewBox="0 0 50 35" fill="#ecbf24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M25 5C20 5 16 8 13 11C10 8 5 6 0 8C4 12 6 16 5 22C8 19 12 18 15 20C17 22 20 26 25 26C30 26 33 22 35 20C38 18 42 19 45 22C44 16 46 12 50 8C45 6 40 8 37 11C34 8 30 5 25 5Z"/>
-        </svg>
-      </div>
-      <div class="logo-pg">
-        <span class="logo-batman-text">BATMAN</span>
-        <span class="logo-pg-text">PG · 688</span>
-      </div>
+<!-- ══════════════════════════════════════════════════════════
+     APP HEADER
+══════════════════════════════════════════════════════════ -->
+<header class="app-header" role="banner">
+  <div class="header-logo">
+    <div class="logo-badge" aria-hidden="true">
+      <svg width="26" height="20" viewBox="0 0 50 35" fill="#ecbf24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M25 5C20 5 16 8 13 11C10 8 5 6 0 8C4 12 6 16 5 22C8 19 12 18 15 20C17 22 20 26 25 26C30 26 33 22 35 20C38 18 42 19 45 22C44 16 46 12 50 8C45 6 40 8 37 11C34 8 30 5 25 5Z"/>
+      </svg>
     </div>
-    <div class="header-actions">
-      <button class="hdr-btn">
-        <div class="icon-box">📲</div>
-        <span>တပ်ဆင်</span>
-      </button>
-      <button class="hdr-btn">
-        <div class="icon-box">📋</div>
-        <span>မှတ်တမ်း</span>
-      </button>
-      <button class="hdr-btn">
-        <div class="icon-box">📊</div>
-        <span>အကျဉ်း</span>
-      </button>
-      <button class="hdr-btn">
-        <div class="icon-box">🌐</div>
-        <span>ဘာသာ</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- ═══════════════ BANNER CAROUSEL ═══════════════ -->
-  <div class="banner-wrapper">
-    <div class="banner-track" id="bannerTrack">
-      <div class="banner-slide">
-        <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/pg27.webp?123" alt="PG Soft" loading="eager">
-      </div>
-      <div class="banner-slide">
-        <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/live429.webp?111" alt="Live Casino" loading="lazy">
-      </div>
-      <div class="banner-slide">
-        <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/adplay.webp?123" alt="AdvantPlay" loading="lazy">
-      </div>
-      <div class="banner-slide">
-        <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/sgmmk.webp?123" alt="SGM" loading="lazy">
-      </div>
-      <div class="banner-slide">
-        <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/bb2.webp?123" alt="Big Bonus" loading="lazy">
-      </div>
-      <div class="banner-slide">
-        <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/gameshow.webp?11" alt="Game Show" loading="lazy">
-      </div>
-      <div class="banner-slide">
-        <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/uu27.jpg?123" alt="Special" loading="lazy">
-      </div>
-    </div>
-    <div class="banner-dots" id="bannerDots"></div>
-  </div>
-
-  <div class="gold-line"></div>
-
-  <!-- ═══════════════ ACTION ROW ═══════════════ -->
-  <div class="action-row">
-    <button class="login-btn">လော့ဂ်အင်</button>
-    <div class="action-icons">
-      <div class="action-icon-item">
-        <div class="action-icon-circle">📲</div>
-        <span class="action-icon-label">တပ်ဆင်ပါ!!!</span>
-      </div>
-      <div class="action-icon-item">
-        <div class="action-icon-circle">📋</div>
-        <span class="action-icon-label">မှတ်တမ်း</span>
-      </div>
-      <div class="action-icon-item">
-        <div class="action-icon-circle" style="font-size:14px; font-weight:800; color:#ecbf24; font-family:monospace;">LOG</div>
-        <span class="action-icon-label">အကျဉ်းချုပ်II</span>
-      </div>
-      <div class="action-icon-item">
-        <div class="action-icon-circle">🌐</div>
-        <span class="action-icon-label">ဘြိမ်တာ</span>
-      </div>
+    <div class="logo-text-wrap">
+      <span class="logo-main">BATMAN</span>
+      <span class="logo-sub">PG · 688</span>
     </div>
   </div>
 
-  <!-- ═══════════════ MARQUEE NOTICE ═══════════════ -->
-  <div class="notice-bar">
-    <span class="notice-icon">📢</span>
-    <span class="notice-text" id="noticeText">
-      Batman will undergo regular maintenance on 28 May 2026 from 6:30 AM to 7:30 AM (Myanmar Time, GMT+06:30). &nbsp;&nbsp;&nbsp;&nbsp; ဘက်မန် ပုံမှန်ထိန်းသိမ်းမှု ၂၈ မေ ၂၀၂၆ မနက် ၆:၃၀ မှ ၇:၃၀ (မြန်မာစံတော်ချိန်) ပြုလုပ်မည်ဖြစ်သည်။
+  <nav class="header-actions" aria-label="Header actions">
+    <button class="hdr-btn" aria-label="Install App">
+      <div class="icon-box">📲</div>
+      <span>တပ်ဆင်</span>
+    </button>
+    <button class="hdr-btn" aria-label="History">
+      <div class="icon-box">📋</div>
+      <span>မှတ်တမ်း</span>
+    </button>
+    <button class="hdr-btn" aria-label="Summary">
+      <div class="icon-box">📊</div>
+      <span>အကျဉ်း</span>
+    </button>
+    <button class="hdr-btn" aria-label="Language">
+      <div class="icon-box">🌐</div>
+      <span>ဘာသာ</span>
+    </button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     BANNER CAROUSEL
+══════════════════════════════════════════════════════════ -->
+<div class="banner-wrapper" role="region" aria-label="Promotions">
+  <div class="banner-track" id="bannerTrack">
+    <div class="banner-slide">
+      <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/pg27.webp?123"
+           alt="PG Soft — Officially Launches!" loading="eager">
+    </div>
+    <div class="banner-slide">
+      <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/live429.webp?111"
+           alt="Live Casino" loading="lazy">
+    </div>
+    <div class="banner-slide">
+      <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/adplay.webp?123"
+           alt="AdvantPlay" loading="lazy">
+    </div>
+    <div class="banner-slide">
+      <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/sgmmk.webp?123"
+           alt="SGM Promotion" loading="lazy">
+    </div>
+    <div class="banner-slide">
+      <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/bb2.webp?123"
+           alt="Big Bonus" loading="lazy">
+    </div>
+    <div class="banner-slide">
+      <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/gameshow.webp?11"
+           alt="Game Show" loading="lazy">
+    </div>
+    <div class="banner-slide">
+      <img src="https://images-utils.filev33344411.xyz/websites/batman/banner/uu27.jpg?123"
+           alt="Special Promotion" loading="lazy">
+    </div>
+  </div>
+  <div class="banner-dots" id="bannerDots" role="tablist" aria-label="Slides"></div>
+</div>
+
+<div class="gold-line"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ACTION ROW — Login Button + 4 Quick Icons
+══════════════════════════════════════════════════════════ -->
+<div class="action-row">
+  <button class="login-btn" aria-label="Login to your account">
+    လော့ဂ်အင်
+  </button>
+
+  <div class="action-icons" role="navigation" aria-label="Quick actions">
+    <div class="action-icon-item" data-modal="installInfo" role="button" aria-label="Install App" tabindex="0">
+      <div class="action-icon-circle">📲</div>
+      <span class="action-icon-label">တပ်ဆင်ပါ!!!</span>
+    </div>
+    <div class="action-icon-item" data-modal="historyModal" role="button" aria-label="History" tabindex="0">
+      <div class="action-icon-circle">📋</div>
+      <span class="action-icon-label">မှတ်တမ်း</span>
+    </div>
+    <div class="action-icon-item" data-modal="summaryModal" role="button" aria-label="Summary" tabindex="0">
+      <div class="action-icon-circle" style="font-size:11px;font-weight:900;color:var(--gold);font-family:monospace;letter-spacing:-1px;">LOG</div>
+      <span class="action-icon-label">အကျဉ်းချုပ်II</span>
+    </div>
+    <div class="action-icon-item" role="button" aria-label="Language" tabindex="0">
+      <div class="action-icon-circle">🌐</div>
+      <span class="action-icon-label">ဘြိမ်တာ</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MARQUEE NOTICE BAR
+══════════════════════════════════════════════════════════ -->
+<div class="notice-bar" role="marquee" aria-live="polite">
+  <span class="notice-icon" aria-hidden="true">📢</span>
+  <div class="notice-marquee">
+    <span class="notice-text">
+      Batman will undergo regular maintenance on 28 May 2026 from 6:30 AM to 7:30 AM (Myanmar Time, GMT+06:30).
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      ဘက်မန် ပုံမှန်ထိန်းသိမ်းမှု ၂၈ မေ ၂၀၂၆ မနက် ၆:၃၀ မှ ၇:၃၀ (မြန်မာစံတော်ချိန်) ပြုလုပ်မည်ဖြစ်သည်။
     </span>
   </div>
+</div>
 
-  <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+<!-- ══════════════════════════════════════════════════════════
+     MAIN CONTENT — Left Sidebar + Right Game Grid
+══════════════════════════════════════════════════════════ -->
+<div id="appCapsule">
   <div class="main-content">
 
     <!-- LEFT CATEGORY SIDEBAR -->
-    <aside class="category-sidebar" id="categorySidebar">
+    <aside class="category-sidebar" aria-label="Game categories">
 
-      <div class="cat-item active" data-cat="slot">
-        <div class="cat-icon-wrap">
-          <span class="cat-emoji">🎰</span>
-        </div>
+      <div class="cat-item active" data-cat="slot" role="button" aria-label="All Slots" tabindex="0">
+        <div class="cat-icon-wrap">🎰</div>
         <span class="cat-label">အားလုံး<br>မူများ</span>
       </div>
 
-      <div class="cat-item" data-cat="gameshow">
-        <div class="cat-icon-wrap">
-          <span class="cat-emoji">🎬</span>
-        </div>
+      <div class="cat-item" data-cat="gameshow" role="button" aria-label="Game Show" tabindex="0">
+        <div class="cat-icon-wrap">🎬</div>
         <span class="cat-label">ဂိမ်း<br>Show</span>
       </div>
 
-      <div class="cat-item" data-cat="buffalo">
-        <div class="cat-icon-wrap">
-          <span class="cat-emoji">🐂</span>
-        </div>
+      <div class="cat-item" data-cat="buffalo" role="button" aria-label="Buffalo" tabindex="0">
+        <div class="cat-icon-wrap">🐂</div>
         <span class="cat-label">BUFFALO</span>
       </div>
 
-      <div class="cat-item" data-cat="arcade">
-        <div class="cat-icon-wrap">
-          <span class="cat-emoji">🕹️</span>
-        </div>
+      <div class="cat-item" data-cat="arcade" role="button" aria-label="Arcade" tabindex="0">
+        <div class="cat-icon-wrap">🕹️</div>
         <span class="cat-label">ARCADE</span>
       </div>
 
-      <div class="cat-item" data-cat="favorite">
-        <div class="cat-icon-wrap">
-          <span class="cat-emoji">❤️</span>
-        </div>
+      <div class="cat-item" data-cat="favorite" role="button" aria-label="Favorites" tabindex="0">
+        <div class="cat-icon-wrap">❤️</div>
         <span class="cat-label">တိုင်ကြိုက်</span>
       </div>
 
-      <div class="cat-item" data-cat="live">
-        <div class="cat-icon-wrap">
-          <span class="cat-emoji">📺</span>
-        </div>
+      <div class="cat-item" data-cat="live" role="button" aria-label="Live Casino" tabindex="0">
+        <div class="cat-icon-wrap">📺</div>
         <span class="cat-label">LIVE</span>
       </div>
 
-      <div class="cat-item" data-cat="fish">
-        <div class="cat-icon-wrap">
-          <span class="cat-emoji">🐟</span>
-        </div>
+      <div class="cat-item" data-cat="fish" role="button" aria-label="Fish Games" tabindex="0">
+        <div class="cat-icon-wrap">🐟</div>
         <span class="cat-label">FISH</span>
       </div>
 
-      <div class="cat-item" data-cat="sport">
-        <div class="cat-icon-wrap">
-          <span class="cat-emoji">⚽</span>
-        </div>
+      <div class="cat-item" data-cat="sport" role="button" aria-label="Sports" tabindex="0">
+        <div class="cat-icon-wrap">⚽</div>
         <span class="cat-label">SPORT</span>
       </div>
 
-      <div class="cat-item" data-cat="lottery">
-        <div class="cat-icon-wrap">
-          <span class="cat-emoji">🎱</span>
-        </div>
+      <div class="cat-item" data-cat="lottery" role="button" aria-label="Lottery" tabindex="0">
+        <div class="cat-icon-wrap">🎱</div>
         <span class="cat-label">LOTTERY</span>
       </div>
 
     </aside>
 
-    <!-- RIGHT GAME GRID -->
-    <section class="game-section">
-      <div class="game-grid" id="gameGrid">
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/PP_SLOT.webp" 
-               onerror="this.src='https://images-utils.filev33344411.xyz/websites/batman/game/AP_SLOT.webp'"
-               alt="Pragmatic Play" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge">PRAGMATIC<br>PLAY</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/LIVE22_SLOT.webp?11" alt="Live22" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="background:linear-gradient(135deg,rgba(180,0,255,0.8),rgba(100,0,180,0.7));">Live22</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/AP_SLOT.webp" alt="AdvantPlay" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="color:#ecbf24;">AP</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/FATPANDA_LOGO.webp" alt="Fat Panda" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge">FAT 🐼<br>PANDA</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/PG_SLOT.webp" alt="PG Soft" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="color:#ecbf24; background:rgba(0,0,0,0.6);">PG</div>
-        </div>
-
-        <div class="game-card" style="background: linear-gradient(135deg,#1a0a00,#3a1500);">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
-            <span style="font-size:28px;">🎲</span>
-            <span style="font-size:11px;font-weight:900;color:#ecbf24;letter-spacing:1px;">JILI</span>
-          </div>
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="color:#ecbf24; font-size:9px; font-weight:900;">JILI</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/PLAYBOX_SLOT.webp" alt="Playbox" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge">PLAY<br>BOX</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/YGR.webp" alt="YGR" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="color:#ecbf24;">YGR</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/AFB_SLOT.webp" alt="AFB" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="color:#ecbf24; font-weight:900; font-size:9px;">AFB</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/FACHAI.webp" alt="Fachai" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge">FC<br>FACHAI</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/CQ9.webp" alt="CQ9" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="color:#ecbf24; font-weight:900;">CQ9</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/af.webp" alt="African Buffalo" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="font-size:7px;">AFRICAN<br>BUFFALO</div>
-        </div>
-
-        <div class="game-card">
-          <img src="https://images-utils.filev33344411.xyz/websites/batman/game/AP_SLOT.webp" alt="AdvantPlay 2" loading="lazy">
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge">ADVANT<br>PLAY</div>
-        </div>
-
-        <div class="game-card" style="background: linear-gradient(135deg,#0d1b2a,#1b2838);">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
-            <span style="font-size:28px;">🎡</span>
-            <span style="font-size:10px;font-weight:700;color:#ecbf24;">SPRIBE</span>
-          </div>
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="color:#ecbf24;">SPRIBE</div>
-        </div>
-
-        <div class="game-card" style="background: linear-gradient(135deg,#1a0020,#2d0038);">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
-            <span style="font-size:28px;">🃏</span>
-            <span style="font-size:9px;font-weight:700;color:#c700f8;">MICRO<br>GAMING</span>
-          </div>
-          <div class="card-overlay"></div>
-          <div class="game-provider-badge" style="color:#c700f8; font-size:7px;">MICRO<br>GAMING</div>
-        </div>
-
-      </div>
+    <!-- RIGHT GAME GRID (populated by category.js) -->
+    <section class="game-section" aria-label="Game providers">
+      <div class="game-grid" id="gameGrid"></div>
     </section>
+
   </div>
+</div><!-- /#appCapsule -->
 
-  <!-- ═══════════════ BOTTOM NAV ═══════════════ -->
-  <nav class="bottom-nav">
-    <a class="nav-item active" href="#" id="nav-home">
-      <span class="nav-icon">🏠</span>
-      <span class="nav-label">အိမ်</span>
-    </a>
-    <a class="nav-item" href="#" id="nav-lock">
-      <span class="nav-icon">🔐</span>
-      <span class="nav-label">ကော့ဝက်</span>
-    </a>
-    <a class="nav-item" href="#" id="nav-history">
-      <span class="nav-icon">🕐</span>
-      <span class="nav-label">မှတ်တမ်း</span>
-    </a>
-    <a class="nav-item" href="#" id="nav-summary">
-      <span class="nav-icon">📊</span>
-      <span class="nav-label">အကျဉ်းချုပ်</span>
-    </a>
-    <a class="nav-item" href="#" id="nav-gamelog">
-      <span class="nav-icon">🎮</span>
-      <span class="nav-label">ဂိမ်းမှတ်တမ်း</span>
-    </a>
-  </nav>
+<!-- ══════════════════════════════════════════════════════════
+     BOTTOM NAVIGATION
+══════════════════════════════════════════════════════════ -->
+<nav class="bottom-nav" aria-label="Main navigation">
 
-  <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
-  <script>
-    // ── Banner Carousel ──
-    (function () {
-      const track = document.getElementById('bannerTrack');
-      const dotsContainer = document.getElementById('bannerDots');
-      const slides = track.querySelectorAll('.banner-slide');
-      let current = 0;
-      let autoTimer = null;
+  <button class="nav-item active" aria-label="Home" aria-current="page">
+    <span class="nav-icon" aria-hidden="true">🏠</span>
+    <span class="nav-label">အိမ်</span>
+  </button>
 
-      // Build dots
-      slides.forEach((_, i) => {
-        const d = document.createElement('div');
-        d.className = 'dot' + (i === 0 ? ' active' : '');
-        d.addEventListener('click', () => goTo(i));
-        dotsContainer.appendChild(d);
-      });
+  <button class="nav-item" data-modal="passwordModal" aria-label="Change Password">
+    <span class="nav-icon" aria-hidden="true">🔐</span>
+    <span class="nav-label">ကော့ဝက်</span>
+  </button>
 
-      function goTo(idx) {
-        current = (idx + slides.length) % slides.length;
-        track.style.transform = `translateX(-${current * 100}%)`;
-        dotsContainer.querySelectorAll('.dot').forEach((d, i) => {
-          d.classList.toggle('active', i === current);
-        });
+  <button class="nav-item" data-modal="historyModal" aria-label="History">
+    <span class="nav-icon" aria-hidden="true">🕐</span>
+    <span class="nav-label">မှတ်တမ်း</span>
+  </button>
+
+  <button class="nav-item" data-modal="summaryModal" aria-label="Summary">
+    <span class="nav-icon" aria-hidden="true">📊</span>
+    <span class="nav-label">အကျဉ်းချုပ်</span>
+  </button>
+
+  <button class="nav-item" data-modal="gameLogModal" aria-label="Game Log">
+    <span class="nav-icon" aria-hidden="true">🎮</span>
+    <span class="nav-label">ဂိမ်းမှတ်တမ်း</span>
+  </button>
+
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL 1 — LOGIN
+══════════════════════════════════════════════════════════ -->
+<div id="loginModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 class="modal-title" id="loginModalTitle">Login</h2>
+      <button class="modal-close" aria-label="Close login modal">×</button>
+    </div>
+    <div class="modal-body">
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" name="username" class="form-input"
+                 placeholder="Enter your username" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" name="password" class="form-input"
+                 placeholder="Enter your password" autocomplete="current-password" required>
+        </div>
+        <div class="form-checkbox">
+          <input type="checkbox" id="rememberMe" name="remember">
+          <label for="rememberMe">Remember Me</label>
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+        <button type="button" class="btn-secondary" onclick="openModal('passwordModal'); closeModal('loginModal');">
+          Forgot Password?
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL 2 — PASSWORD RESET
+══════════════════════════════════════════════════════════ -->
+<div id="passwordModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pwModalTitle">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 class="modal-title" id="pwModalTitle">Reset Password</h2>
+      <button class="modal-close" aria-label="Close password modal">×</button>
+    </div>
+    <div class="modal-body">
+      <form id="passwordForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="oldPassword">Old Password</label>
+          <input type="password" id="oldPassword" name="oldPassword" class="form-input"
+                 placeholder="Enter old password" autocomplete="current-password" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="newPassword">New Password</label>
+          <input type="password" id="newPassword" name="newPassword" class="form-input"
+                 placeholder="Enter new password (min 6 chars)" autocomplete="new-password" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" class="form-input"
+                 placeholder="Re-enter new password" autocomplete="new-password" required>
+        </div>
+        <button type="submit" class="btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL 3 — HISTORY
+══════════════════════════════════════════════════════════ -->
+<div id="historyModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="historyModalTitle">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 class="modal-title" id="historyModalTitle">History</h2>
+      <button class="modal-close" aria-label="Close history modal">×</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Date filter -->
+      <div class="date-filter-row">
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label" for="histFrom">From Date</label>
+          <input type="date" id="histFrom" name="fromDate" class="form-input">
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label" for="histTo">To Date</label>
+          <input type="date" id="histTo" name="toDate" class="form-input">
+        </div>
+      </div>
+      <button class="btn-primary search-btn" style="margin: 12px 0;">Search</button>
+
+      <!-- Result table -->
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Balance</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Deposit</td>
+              <td class="amount-plus">+10,000</td>
+              <td>10,000</td>
+              <td>2026-06-05</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Withdraw</td>
+              <td class="amount-minus">-5,000</td>
+              <td>5,000</td>
+              <td>2026-06-04</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Bonus</td>
+              <td class="amount-plus">+500</td>
+              <td>5,500</td>
+              <td>2026-06-03</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL 4 — SUMMARY
+══════════════════════════════════════════════════════════ -->
+<div id="summaryModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="summaryModalTitle">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 class="modal-title" id="summaryModalTitle">Account Summary</h2>
+      <button class="modal-close" aria-label="Close summary modal">×</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="s-label">Total Balance</div>
+          <div class="s-value gold">5,500 <span style="font-size:11px;font-weight:400;">MMK</span></div>
+        </div>
+        <div class="summary-card">
+          <div class="s-label">Total Deposit</div>
+          <div class="s-value">10,000 <span style="font-size:11px;font-weight:400;">MMK</span></div>
+        </div>
+        <div class="summary-card">
+          <div class="s-label">Total Withdraw</div>
+          <div class="s-value">5,000 <span style="font-size:11px;font-weight:400;">MMK</span></div>
+        </div>
+        <div class="summary-card">
+          <div class="s-label">Total Winnings</div>
+          <div class="s-value green">2,500 <span style="font-size:11px;font-weight:400;">MMK</span></div>
+        </div>
+        <div class="summary-card full">
+          <div>
+            <div class="s-label">Last Updated</div>
+            <div style="font-size:13px;color:var(--text-secondary);">2026-06-05 at 18:00</div>
+          </div>
+          <span style="font-size:24px;">🕕</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL 5 — GAME LOG
+══════════════════════════════════════════════════════════ -->
+<div id="gameLogModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="gameLogModalTitle">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 class="modal-title" id="gameLogModalTitle">Game Log</h2>
+      <button class="modal-close" aria-label="Close game log modal">×</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Date filter -->
+      <div class="date-filter-row">
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label" for="glFrom">From Date</label>
+          <input type="date" id="glFrom" name="fromDate" class="form-input">
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label" for="glTo">To Date</label>
+          <input type="date" id="glTo" name="toDate" class="form-input">
+        </div>
+      </div>
+      <button class="btn-primary search-btn" style="margin: 12px 0;">Search</button>
+
+      <!-- Tab switcher -->
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchGameLogTab(this,'all')">All</button>
+        <button class="modal-tab" onclick="switchGameLogTab(this,'win')">Win</button>
+        <button class="modal-tab" onclick="switchGameLogTab(this,'lose')">Lose</button>
+      </div>
+
+      <!-- Result table -->
+      <div class="data-table-wrap">
+        <table class="data-table" id="gameLogTable">
+          <thead>
+            <tr>
+              <th>Game</th>
+              <th>Provider</th>
+              <th>Result</th>
+              <th>Bet</th>
+              <th>Win/Loss</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fortune Tiger</td>
+              <td>PG Soft</td>
+              <td><span class="badge badge-win">WIN</span></td>
+              <td>500</td>
+              <td class="amount-plus">+1,250</td>
+            </tr>
+            <tr>
+              <td>Sweet Bonanza</td>
+              <td>Pragmatic</td>
+              <td><span class="badge badge-lose">LOSE</span></td>
+              <td>1,000</td>
+              <td class="amount-minus">-1,000</td>
+            </tr>
+            <tr>
+              <td>Mahjong Ways</td>
+              <td>PG Soft</td>
+              <td><span class="badge badge-win">WIN</span></td>
+              <td>200</td>
+              <td class="amount-plus">+480</td>
+            </tr>
+            <tr>
+              <td>Gates of Olympus</td>
+              <td>Pragmatic</td>
+              <td><span class="badge badge-draw">DRAW</span></td>
+              <td>300</td>
+              <td style="color:var(--text-secondary)">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODULAR JAVASCRIPT — Load order matters
+══════════════════════════════════════════════════════════ -->
+<script src="js/banner.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/category.js"></script>
+<script src="js/app.js"></script>
+
+<!-- Inline helpers that need DOM access -->
+<script>
+  // Game Log tab switcher
+  function switchGameLogTab(btn, filter) {
+    document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const rows = document.querySelectorAll('#gameLogTable tbody tr');
+    rows.forEach(row => {
+      const badge = row.querySelector('.badge');
+      if (!badge) return;
+      const status = badge.textContent.trim().toLowerCase();
+      if (filter === 'all') {
+        row.style.display = '';
+      } else if (filter === 'win') {
+        row.style.display = status === 'win' ? '' : 'none';
+      } else if (filter === 'lose') {
+        row.style.display = status === 'lose' ? '' : 'none';
       }
-
-      function startAuto() {
-        autoTimer = setInterval(() => goTo(current + 1), 3200);
-      }
-
-      // Touch swipe
-      let startX = 0;
-      track.parentElement.addEventListener('touchstart', e => {
-        startX = e.touches[0].clientX;
-        clearInterval(autoTimer);
-      }, { passive: true });
-      track.parentElement.addEventListener('touchend', e => {
-        const diff = startX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
-        startAuto();
-      }, { passive: true });
-
-      startAuto();
-    })();
-
-    // ── Category Sidebar ──
-    document.querySelectorAll('.cat-item').forEach(item => {
-      item.addEventListener('click', function () {
-        document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-        // In a real app: filter game grid by this.dataset.cat
-      });
     });
+  }
+</script>
 
-    // ── Bottom Nav ──
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-
-    // ── Game Card ──
-    document.querySelectorAll('.game-card').forEach(card => {
-      card.addEventListener('click', function () {
-        this.style.transform = 'scale(0.93)';
-        setTimeout(() => this.style.transform = '', 200);
-      });
-    });
-
-    // ── Login Button ──
-    document.querySelector('.login-btn').addEventListener('click', function () {
-      this.style.opacity = '0.7';
-      setTimeout(() => this.style.opacity = '1', 150);
-    });
-
-    // ── Marquee restart on end (seamless loop fallback) ──
-    const noticeEl = document.getElementById('noticeText');
-    noticeEl.addEventListener('animationiteration', () => {});
-  </script>
 </body>
 </html>
