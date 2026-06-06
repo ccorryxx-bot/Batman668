@@ -26,15 +26,11 @@
 }
 
 .logo-badge {
-  width: 42px;
-  height: 42px;
-  background: #0d0d1a;
-  border: 2px solid var(--gold);
-  border-radius: 9px;
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   flex-shrink: 0;
 }
 
@@ -268,41 +264,42 @@
 }
 
 /* ══════════════════════════════
-   MAIN CONTENT (Sidebar + Grid)
+   HORIZONTAL CATEGORY BAR
 ══════════════════════════════ */
-.main-content {
+.category-hscroll {
   display: flex;
-  align-items: flex-start;
+  padding: 8px 10px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  background: var(--bg-primary);
+  border-bottom: 1px solid #1a1a1a;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 4px;
 }
 
-/* ── Left Category Sidebar ── */
-.category-sidebar {
-  flex: 0 0 62px;
-  background: var(--bg-primary);
-  border-right: 1px solid #1a1a1a;
-  overflow-y: auto;
-  max-height: calc(100dvh - 175px);
-  position: sticky;
-  top: 63px;
-  align-self: flex-start;
-}
+.category-hscroll::-webkit-scrollbar { display: none; }
 
 .cat-item {
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 4px;
-  padding: 10px 5px;
+  padding: 7px 10px;
   cursor: pointer;
-  border-left: 3px solid transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
   transition: var(--transition);
-  min-height: 64px;
+  min-width: 56px;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .cat-item.active {
-  background: linear-gradient(90deg, rgba(236,191,36,0.15) 0%, rgba(236,191,36,0.03) 100%);
-  border-left-color: var(--gold);
+  background: rgba(236,191,36,0.15);
+  border-bottom-color: var(--gold);
 }
 
 .cat-icon-wrap {
@@ -330,7 +327,7 @@
   line-height: 1.25;
   text-transform: uppercase;
   letter-spacing: 0.2px;
-  word-break: break-word;
+  white-space: nowrap;
 }
 
 .cat-item.active .cat-label {
@@ -338,11 +335,17 @@
   font-weight: 700;
 }
 
-/* ── Right Game Section ── */
+/* ══════════════════════════════
+   MAIN CONTENT (Full Width Grid)
+══════════════════════════════ */
+.main-content {
+  display: block;
+}
+
+/* Game Section */
 .game-section {
-  flex: 1;
   padding: 6px;
-  min-width: 0;
+  width: 100%;
 }
 
 /* ══════════════════════════════
