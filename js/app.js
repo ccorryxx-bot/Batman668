@@ -1,6 +1,6 @@
 /**
  * app.js — Main Application Entry Point
- * Batman688 Mobile Gaming Platform
+ * iW99 Mobile Gaming Platform
  */
 
 // Supabase client — anon key is public and safe for frontend use
@@ -9,9 +9,9 @@ const _supa = window.supabase.createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrb3R5am1laXpobmV5eXVicHF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MTkxMDMsImV4cCI6MjA5NjI5NTEwM30.XCqoOB6PMxD7jwALdjBx2au7UJOhMC5tl658QAO-Nc8'
 );
 
-// Fake-email helper: batman123 → batman123@batman688.com
+// Fake-email helper: batman123 → batman123@iw99.com
 function toEmail(username) {
-  return username.trim().toLowerCase() + '@batman688.com';
+  return username.trim().toLowerCase() + '@iw99.com';
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
