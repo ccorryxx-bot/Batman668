@@ -24,13 +24,11 @@
 <header class="app-header" role="banner">
   <div class="header-logo">
     <div class="logo-badge" aria-hidden="true">
-      <svg width="26" height="20" viewBox="0 0 50 35" fill="#ecbf24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M25 5C20 5 16 8 13 11C10 8 5 6 0 8C4 12 6 16 5 22C8 19 12 18 15 20C17 22 20 26 25 26C30 26 33 22 35 20C38 18 42 19 45 22C44 16 46 12 50 8C45 6 40 8 37 11C34 8 30 5 25 5Z"/>
-      </svg>
-    </div>
+    <img src="https://ik.imagekit.io/rbok01qam/Brand%20Logo%20/IMG_20260605_215459.png?tr=f-auto,w-40,h-40" alt="iW99 Logo" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+  </div>
     <div class="logo-text-wrap">
-      <span class="logo-main">BATMAN</span>
-      <span class="logo-sub">PG · 688</span>
+      <span class="logo-main">iW99</span>
+      <span class="logo-sub">Gaming Platform</span>
     </div>
   </div>
 
@@ -204,29 +202,29 @@
 ══════════════════════════════════════════════════════════ -->
 <nav class="bottom-nav" aria-label="Main navigation">
 
-  <button class="nav-item active" aria-label="Home" aria-current="page">
+  <button class="nav-item active" data-nav="home" aria-label="Home" aria-current="page">
     <span class="nav-icon" aria-hidden="true">🏠</span>
-    <span class="nav-label">အိမ်</span>
+    <span class="nav-label">Home</span>
   </button>
 
-  <button class="nav-item" data-modal="passwordModal" aria-label="Change Password">
-    <span class="nav-icon" aria-hidden="true">🔐</span>
-    <span class="nav-label">ကော့ဝက်</span>
+  <button class="nav-item" data-nav="agent" data-modal="agentModal" aria-label="Agent Network">
+    <span class="nav-icon" aria-hidden="true">🤝</span>
+    <span class="nav-label">Agent</span>
   </button>
 
-  <button class="nav-item" data-modal="historyModal" aria-label="History">
-    <span class="nav-icon" aria-hidden="true">🕐</span>
-    <span class="nav-label">မှတ်တမ်း</span>
+  <button class="nav-item nav-item--center" data-nav="deposit" data-modal="depositModal" aria-label="Deposit">
+    <div class="nav-center-icon" aria-hidden="true">💳</div>
+    <span class="nav-label">Deposit</span>
   </button>
 
-  <button class="nav-item" data-modal="summaryModal" aria-label="Summary">
-    <span class="nav-icon" aria-hidden="true">📊</span>
-    <span class="nav-label">အကျဉ်းချုပ်</span>
+  <button class="nav-item" data-nav="promotion" data-modal="promotionModal" aria-label="Promotion">
+    <span class="nav-icon" aria-hidden="true">🎁</span>
+    <span class="nav-label">Promotion</span>
   </button>
 
-  <button class="nav-item" data-modal="gameLogModal" aria-label="Game Log">
-    <span class="nav-icon" aria-hidden="true">🎮</span>
-    <span class="nav-label">ဂိမ်းမှတ်တမ်း</span>
+  <button class="nav-item" data-nav="account" data-modal="accountModal" aria-label="Account">
+    <span class="nav-icon" aria-hidden="true">👤</span>
+    <span class="nav-label">Account</span>
   </button>
 
 </nav>
@@ -535,6 +533,15 @@
 
 <!-- Inline helpers that need DOM access -->
 <script>
+  // Deposit tab switcher (delegated to app.js)
+  function switchDepositTab(btn, tab) {
+    document.querySelectorAll('#depositModal .modal-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('depositKpay').style.display    = tab === 'kpay'    ? '' : 'none';
+    document.getElementById('depositWavepay').style.display = tab === 'wavepay' ? '' : 'none';
+    document.getElementById('depositBank').style.display    = tab === 'bank'    ? '' : 'none';
+  }
+
   // Game Log tab switcher
   function switchGameLogTab(btn, filter) {
     document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
@@ -554,6 +561,136 @@
     });
   }
 </script>
+
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL — AGENT NETWORK
+══════════════════════════════════════════════════════════ -->
+<div id="agentModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="agentModalTitle">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 class="modal-title" id="agentModalTitle">🤝 Agent Network</h2>
+      <button class="modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body" style="text-align:center;padding:32px 16px;">
+      <div style="font-size:56px;margin-bottom:16px;">🤝</div>
+      <h3 style="color:var(--gold);font-size:18px;margin-bottom:8px;">Become an Agent</h3>
+      <p style="color:var(--text-secondary);font-size:13px;line-height:1.7;margin-bottom:24px;">
+        Join iW99 Agent Network and earn commissions.<br>
+        Contact us to get started.
+      </p>
+      <div class="summary-card" style="text-align:left;">
+        <div class="s-label">Commission Rate</div>
+        <div class="s-value gold">Up to 40%</div>
+      </div>
+      <div class="summary-card" style="text-align:left;margin-top:8px;">
+        <div class="s-label">Contact</div>
+        <div class="s-value" style="font-size:14px;">Telegram / Viber</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL — DEPOSIT
+══════════════════════════════════════════════════════════ -->
+<div id="depositModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="depositModalTitle">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 class="modal-title" id="depositModalTitle">💳 Deposit</h2>
+      <button class="modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tabs" style="margin-bottom:16px;">
+        <button class="modal-tab active" onclick="switchDepositTab(this,'kpay')">KPay</button>
+        <button class="modal-tab" onclick="switchDepositTab(this,'wavepay')">WavePay</button>
+        <button class="modal-tab" onclick="switchDepositTab(this,'bank')">Bank</button>
+      </div>
+      <div id="depositKpay">
+        <div class="summary-card">
+          <div class="s-label">KBZ Pay Number</div>
+          <div class="s-value gold" style="font-size:18px;letter-spacing:1px;">09 xxx xxx xxx</div>
+        </div>
+        <div class="summary-card" style="margin-top:8px;">
+          <div class="s-label">Account Name</div>
+          <div class="s-value" style="font-size:14px;">iW99 Gaming</div>
+        </div>
+      </div>
+      <div id="depositWavepay" style="display:none;">
+        <div class="summary-card">
+          <div class="s-label">Wave Money Number</div>
+          <div class="s-value gold" style="font-size:18px;letter-spacing:1px;">09 xxx xxx xxx</div>
+        </div>
+      </div>
+      <div id="depositBank" style="display:none;">
+        <div class="summary-card">
+          <div class="s-label">Bank Account</div>
+          <div class="s-value" style="font-size:14px;">KBZ — 0000 0000 0000</div>
+        </div>
+      </div>
+      <p style="color:var(--text-secondary);font-size:11px;margin-top:16px;text-align:center;">
+        After depositing, contact admin with your receipt.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL — PROMOTION
+══════════════════════════════════════════════════════════ -->
+<div id="promotionModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="promotionModalTitle">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 class="modal-title" id="promotionModalTitle">🎁 Promotions</h2>
+      <button class="modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="summary-card" style="margin-bottom:10px;">
+        <div>
+          <div class="s-label">Welcome Bonus</div>
+          <div class="s-value gold">100% First Deposit</div>
+          <div style="color:var(--text-secondary);font-size:11px;margin-top:4px;">Up to 50,000 MMK</div>
+        </div>
+        <span style="font-size:32px;">🎉</span>
+      </div>
+      <div class="summary-card" style="margin-bottom:10px;">
+        <div>
+          <div class="s-label">Daily Bonus</div>
+          <div class="s-value gold">10% Every Day</div>
+          <div style="color:var(--text-secondary);font-size:11px;margin-top:4px;">Min deposit 5,000 MMK</div>
+        </div>
+        <span style="font-size:32px;">📅</span>
+      </div>
+      <div class="summary-card">
+        <div>
+          <div class="s-label">Referral Bonus</div>
+          <div class="s-value gold">5% Commission</div>
+          <div style="color:var(--text-secondary);font-size:11px;margin-top:4px;">For each referred friend</div>
+        </div>
+        <span style="font-size:32px;">👥</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL — ACCOUNT
+══════════════════════════════════════════════════════════ -->
+<div id="accountModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 class="modal-title" id="accountModalTitle">👤 Account</h2>
+      <button class="modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body" id="accountModalBody">
+      <!-- Populated by JS based on auth state -->
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
