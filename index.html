@@ -238,10 +238,18 @@
 <div id="loginModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
   <div class="modal-sheet">
     <div class="modal-header">
-      <h2 class="modal-title" id="loginModalTitle">Login</h2>
+      <h2 class="modal-title" id="loginModalTitle">Batman688</h2>
       <button class="modal-close" aria-label="Close login modal">×</button>
     </div>
     <div class="modal-body">
+
+      <!-- Auth Tabs -->
+      <div class="modal-tabs" style="margin-bottom:16px;">
+        <button class="modal-tab active" id="signinTab" onclick="switchAuthTab('signin')">Sign In</button>
+        <button class="modal-tab" id="signupTab" onclick="switchAuthTab('signup')">Sign Up</button>
+      </div>
+
+      <!-- Sign In Form -->
       <form id="loginForm" novalidate>
         <div class="form-group">
           <label class="form-label" for="loginUsername">Username</label>
@@ -257,11 +265,32 @@
           <input type="checkbox" id="rememberMe" name="remember">
           <label for="rememberMe">Remember Me</label>
         </div>
-        <button type="submit" class="btn-primary">Login</button>
+        <button type="submit" class="btn-primary">Sign In</button>
         <button type="button" class="btn-secondary" onclick="openModal('passwordModal'); closeModal('loginModal');">
           Forgot Password?
         </button>
       </form>
+
+      <!-- Sign Up Form -->
+      <form id="signupForm" novalidate style="display:none;">
+        <div class="form-group">
+          <label class="form-label" for="signupUsername">Username</label>
+          <input type="text" id="signupUsername" name="username" class="form-input"
+                 placeholder="Choose a username (min 3 chars)" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" name="password" class="form-input"
+                 placeholder="Choose a password (min 6 chars)" autocomplete="new-password" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signupConfirm">Confirm Password</label>
+          <input type="password" id="signupConfirm" name="confirmPassword" class="form-input"
+                 placeholder="Re-enter your password" autocomplete="new-password" required>
+        </div>
+        <button type="submit" class="btn-primary">Create Account</button>
+      </form>
+
     </div>
   </div>
 </div>
