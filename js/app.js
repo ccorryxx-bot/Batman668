@@ -38,7 +38,7 @@ function updateAuthUI() {
   }
 }
 
-/* ── Auth Tab Switcher (called by onclick in HTML) ── */
+/* ── Auth Tab Switcher ── */
 function switchAuthTab(tab) {
   const signinForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
@@ -98,7 +98,6 @@ function initActionIcons() {
 
 /* ── Forms ── */
 function initForms() {
-  // ── Sign In ──
   const loginForm = document.getElementById('loginForm');
   if (loginForm) {
     loginForm.addEventListener('submit', async function (e) {
@@ -130,7 +129,6 @@ function initForms() {
     });
   }
 
-  // ── Sign Up ──
   const signupForm = document.getElementById('signupForm');
   if (signupForm) {
     signupForm.addEventListener('submit', async function (e) {
@@ -166,7 +164,6 @@ function initForms() {
     });
   }
 
-  // ── Password Reset ──
   const pwForm = document.getElementById('passwordForm');
   if (pwForm) {
     pwForm.addEventListener('submit', function (e) {
