@@ -74,21 +74,6 @@ function switchAuthTab(tab) {
   }
 }
 
-/* ── Bottom Nav ── */
-function initBottomNav() {
-  const items = document.querySelectorAll('.nav-item');
-  items.forEach(item => {
-    item.addEventListener('click', function (e) {
-      e.preventDefault();
-      const modal = this.dataset.modal;
-      if (modal) { ModalManager.open(modal); return; }
-      ModalManager.closeAll();
-      items.forEach(i => i.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
-}
-
 /* ── Action Icons ── */
 function initActionIcons() {
   document.querySelectorAll('.action-icon-item').forEach(item => {
@@ -221,3 +206,84 @@ function clearFeedback(form) {
   if (!form) return;
   form.querySelectorAll('.form-feedback').forEach(el => el.remove());
 }
+
+
+/* ══════════════════════════════════════
+   BOTTOM NAV — new 5-button logic
+══════════════════════════════════════ */
+function initBottomNav() {
+  const items = document.querySelectorAll('.nav-item');
+  items.forEach(item => {
+    item.addEventListener('click', async function (e) {
+      e.preventDefault();
+      const nav   = this.dataset.nav;
+      const modal = this.dataset.modal;
+
+      // Home button
+      if (nav === 'home') {
+        ModalManager.closeAll();
+        items.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        return;
+      }
+
+      // Account: show profile if logged in, else login
+      if (nav === 'account') {
+        const { data } = await _supa.auth.getSession();
+        if (data.session?.user) {
+          await populateAccountModal(data.session.user);
+          ModalManager.open('accountModal');
+        } else {
+          ModalManager.open('loginModal');
+        }
+        return;
+      }
+
+      // Agent / Deposit / Promotion: open their modal
+      if (modal) {
+        ModalManager.open(modal);
+      }
+    });
+  });
+}
+
+/* ── Deposit tab switcher ── */
+function switchDepositTab(btn, tab) {
+  document.querySelectorAll('#depositModal .modal-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('depositKpay').style.display    = tab === 'kpay'    ? '' : 'none';
+  document.getElementById('depositWavepay').style.display = tab === 'wavepay' ? '' : 'none';
+  document.getElementById('depositBank').style.display    = tab === 'bank'    ? '' : 'none';
+}
+
+/* ── Account modal content ── */
+async function populateAccountModal(user) {
+  const body  = document.getElementById('accountModalBody');
+  if (!body) return;
+  const uname = user.user_metadata?.username || user.email?.split('@')[0] || 'User';
+  const phone = user.user_metadata?.phone    || '—';
+  const since = user.created_at ? new Date(user.created_at).toLocaleDateString() : '—';
+  body.innerHTML = `
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="width:64px;height:64px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px;">
+        ${uname.charAt(0).toUpperCase()}
+      </div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-primary);">${uname}</div>
+    </div>
+    <div class="summary-card" style="margin-bottom:8px;">
+      <div><div class="s-label">Phone</div><div class="s-value" style="font-size:14px;">${phone}</div></div>
+      <span style="font-size:20px;">📱</span>
+    </div>
+    <div class="summary-card" style="margin-bottom:16px;">
+      <div><div class="s-label">Member Since</div><div class="s-value" style="font-size:14px;">${since}</div></div>
+      <span style="font-size:20px;">📅</span>
+    </div>
+    <button class="btn-primary" onclick="handleLogout()" style="background:#ef4444;">Log Out</button>
+  `;
+}
+
+async function handleLogout() {
+  await _supa.auth.signOut();
+  ModalManager.close('accountModal');
+}
+
