@@ -1,6 +1,6 @@
 /**
  * banner.js — Banner Carousel Module
- * Batman688 Mobile Gaming Platform
+ * iW99 Mobile Gaming Platform
  *
  * Features:
  *   - Auto-advance every 3.5s
