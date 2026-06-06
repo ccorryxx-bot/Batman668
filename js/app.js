@@ -42,104 +42,18 @@ function updateAuthUI() {
 function switchAuthTab(tab) {
   const signinForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
-  const signinTab  = document.getElementById('signinTab');
-  const signupTab  = document.getElementById('signupTab');
-  clearFeedback(signinForm);
-  clearFeedback(signupForm);
-  if (tab === 'signin') {
-    signinForm.style.display = '';
-    signupForm.style.display = 'none';
-    signinTab.classList.add('active');
-    signupTab.classList.remove('active');
-  } else {
-    signinForm.style.display = 'none';
-    signupForm.style.display = '';
-    signupTab.classList.add('active');
-    signinTab.classList.remove('active');
-  }
-}
-
-/* ── Bottom Nav ── */
-function initBottomNav() {
-  const items = document.querySelectorAll('.nav-item');
-  items.forEach(item => {
-    item.addEventListener('click', function (e) {
-      e.preventDefault();
-      const modal = this.dataset.modal;
-      if (modal) { ModalManager.open(modal); return; }
-      ModalManager.closeAll();
-      items.forEach(i => i.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
-}
-
-/* ── Action Icons ── */
-function initActionIcons() {
-  document.querySelectorAll('.action-icon-item').forEach(item => {
-    item.addEventListener('click', function () {
-      const modal = this.dataset.modal;
-      if (modal) ModalManager.open(modal);
-      const circle = this.querySelector('.action-icon-circle');
-      if (circle) {
-        circle.style.transform = 'scale(0.88)';
-        setTimeout(() => { circle.style.transform = ''; }, 150);
-      }
-    });
-  });
-
-  const loginBtn = document.querySelector('.login-btn');
-  if (loginBtn) {
-    loginBtn.addEventListener('click', () => {
-      if (!localStorage.getItem('batman_token')) ModalManager.open('loginModal');
-    });
-  }
-}
-
-/* ── Forms ── */
-function initForms() {
-  const loginForm = document.getElementById('loginForm');
-  if (loginForm) {
-    loginForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const btn  = this.querySelector('[type="submit"]');
-      const user = this.querySelector('[name="username"]').value.trim();
-      const pass = this.querySelector('[name="password"]').value;
-      if (!user || !pass) return showFormError(this, 'Username and password required');
-      btn.disabled = true;
-      btn.textContent = 'Signing in…';
-      try {
-        const res  = await fetch(API_URL + '/auth/signin', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: user, password: pass }),
-        });
-        const data = await res.json();
-        if (!res.ok) return showFormError(this, data.error || 'Login failed');
-        localStorage.setItem('batman_token', data.token);
-        localStorage.setItem('batman_user', data.username);
-        showFormSuccess(this, 'Welcome back, ' + data.username + '!');
-        setTimeout(() => { ModalManager.close('loginModal'); updateAuthUI(); }, 1200);
-      } catch (_) {
-        showFormError(this, 'Network error. Please try again.');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Sign In';
-      }
-    });
-  }
-
-  const signupForm = document.getElementById('signupForm');
   if (signupForm) {
     signupForm.addEventListener('submit', async function (e) {
       e.preventDefault();
-      const btn  = this.querySelector('[type="submit"]');
-      const user = this.querySelector('[name="username"]').value.trim();
-      const pass = this.querySelector('[name="password"]').value;
-      const conf = this.querySelector('[name="confirmPassword"]').value;
-      if (!user || !pass || !conf) return showFormError(this, 'All fields are required');
+      const btn   = this.querySelector('[type="submit"]');
+      const user  = this.querySelector('[name="username"]').value.trim();
+      const phone = this.querySelector('[name="phone"]').value.trim();
+      const pass  = this.querySelector('[name="password"]').value;
+      const conf  = this.querySelector('[name="confirmPassword"]').value;
+      if (!user || !phone || !pass || !conf) return showFormError(this, 'All fields are required');
       if (pass !== conf) return showFormError(this, 'Passwords do not match');
       if (user.length < 3) return showFormError(this, 'Username must be at least 3 characters');
+      if (phone.length < 6) return showFormError(this, 'Enter a valid phone number');
       if (pass.length < 6) return showFormError(this, 'Password must be at least 6 characters');
       btn.disabled = true;
       btn.textContent = 'Creating…';
@@ -147,7 +61,7 @@ function initForms() {
         const res  = await fetch(API_URL + '/auth/signup', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: user, password: pass }),
+          body: JSON.stringify({ username: user, phone, password: pass }),
         });
         const data = await res.json();
         if (!res.ok) return showFormError(this, data.error || 'Signup failed');
@@ -161,6 +75,8 @@ function initForms() {
         btn.disabled = false;
         btn.textContent = 'Create Account';
       }
+    });
+  }
     });
   }
 
