@@ -3,10 +3,18 @@
  * Batman688 Mobile Gaming Platform
  */
 
-// Update this to your deployed Replit domain for production
-const API_URL = 'https://4c38c430-53aa-42fc-8fcb-899f2de4ed73-00-3ihaf109tb0jc.sisko.replit.dev/api';
+// Supabase client — anon key is public and safe for frontend use
+const _supa = window.supabase.createClient(
+  'https://qkotyjmeizhneyyubpqx.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrb3R5am1laXpobmV5eXVicHF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MTkxMDMsImV4cCI6MjA5NjI5NTEwM30.XCqoOB6PMxD7jwALdjBx2au7UJOhMC5tl658QAO-Nc8'
+);
 
-document.addEventListener('DOMContentLoaded', function () {
+// Fake-email helper: batman123 → batman123@batman688.com
+function toEmail(username) {
+  return username.trim().toLowerCase() + '@batman688.com';
+}
+
+document.addEventListener('DOMContentLoaded', async function () {
   BannerCarousel.init('bannerTrack', 'bannerDots');
   ModalManager.init();
   CategoryManager.init('gameGrid');
@@ -14,22 +22,29 @@ document.addEventListener('DOMContentLoaded', function () {
   initActionIcons();
   initForms();
   initTableSearch();
-  updateAuthUI();
+
+  // Restore session on page load
+  const { data } = await _supa.auth.getSession();
+  updateAuthUI(data.session);
+
+  // React to login/logout events
+  _supa.auth.onAuthStateChange((_event, session) => {
+    updateAuthUI(session);
+  });
 });
 
 /* ── Auth UI state ── */
-function updateAuthUI() {
-  const token    = localStorage.getItem('batman_token');
-  const username = localStorage.getItem('batman_user');
+function updateAuthUI(session) {
   const loginBtn = document.querySelector('.login-btn');
   if (!loginBtn) return;
-  if (token && username) {
-    loginBtn.textContent = username;
+  if (session?.user) {
+    const uname = session.user.user_metadata?.username
+                  || session.user.email?.split('@')[0]
+                  || 'User';
+    loginBtn.textContent = uname;
     loginBtn.title = 'Click to log out';
-    loginBtn.onclick = () => {
-      localStorage.removeItem('batman_token');
-      localStorage.removeItem('batman_user');
-      updateAuthUI();
+    loginBtn.onclick = async () => {
+      await _supa.auth.signOut();
     };
   } else {
     loginBtn.textContent = 'လာ့ဂျင်';
@@ -41,6 +56,88 @@ function updateAuthUI() {
 /* ── Auth Tab Switcher ── */
 function switchAuthTab(tab) {
   const signinForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  const signinTab  = document.getElementById('signinTab');
+  const signupTab  = document.getElementById('signupTab');
+  clearFeedback(signinForm);
+  clearFeedback(signupForm);
+  if (tab === 'signin') {
+    signinForm.style.display = '';
+    signupForm.style.display = 'none';
+    signinTab.classList.add('active');
+    signupTab.classList.remove('active');
+  } else {
+    signinForm.style.display = 'none';
+    signupForm.style.display = '';
+    signupTab.classList.add('active');
+    signinTab.classList.remove('active');
+  }
+}
+
+/* ── Bottom Nav ── */
+function initBottomNav() {
+  const items = document.querySelectorAll('.nav-item');
+  items.forEach(item => {
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
+      const modal = this.dataset.modal;
+      if (modal) { ModalManager.open(modal); return; }
+      ModalManager.closeAll();
+      items.forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+}
+
+/* ── Action Icons ── */
+function initActionIcons() {
+  document.querySelectorAll('.action-icon-item').forEach(item => {
+    item.addEventListener('click', function () {
+      const modal = this.dataset.modal;
+      if (modal) ModalManager.open(modal);
+      const circle = this.querySelector('.action-icon-circle');
+      if (circle) {
+        circle.style.transform = 'scale(0.88)';
+        setTimeout(() => { circle.style.transform = ''; }, 150);
+      }
+    });
+  });
+
+  const loginBtn = document.querySelector('.login-btn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+      // onclick is managed by updateAuthUI; fallback only
+    });
+  }
+}
+
+/* ── Forms ── */
+function initForms() {
+
+  // ── Sign In ──
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn  = this.querySelector('[type="submit"]');
+      const user = this.querySelector('[name="username"]').value.trim();
+      const pass = this.querySelector('[name="password"]').value;
+      if (!user || !pass) return showFormError(this, 'Username and password required');
+      btn.disabled = true;
+      btn.textContent = 'Signing in…';
+      const { data, error } = await _supa.auth.signInWithPassword({
+        email: toEmail(user),
+        password: pass,
+      });
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+      if (error) return showFormError(this, 'Invalid username or password');
+      showFormSuccess(this, 'Welcome back, ' + (data.user.user_metadata?.username || user) + '!');
+      setTimeout(() => ModalManager.close('loginModal'), 1200);
+    });
+  }
+
+  // ── Sign Up ──
   const signupForm = document.getElementById('signupForm');
   if (signupForm) {
     signupForm.addEventListener('submit', async function (e) {
@@ -57,29 +154,25 @@ function switchAuthTab(tab) {
       if (pass.length < 6) return showFormError(this, 'Password must be at least 6 characters');
       btn.disabled = true;
       btn.textContent = 'Creating…';
-      try {
-        const res  = await fetch(API_URL + '/auth/signup', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: user, phone, password: pass }),
-        });
-        const data = await res.json();
-        if (!res.ok) return showFormError(this, data.error || 'Signup failed');
-        localStorage.setItem('batman_token', data.token);
-        localStorage.setItem('batman_user', data.username);
-        showFormSuccess(this, 'Account created! Welcome, ' + data.username + '!');
-        setTimeout(() => { ModalManager.close('loginModal'); updateAuthUI(); }, 1500);
-      } catch (_) {
-        showFormError(this, 'Network error. Please try again.');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Create Account';
+      const { data, error } = await _supa.auth.signUp({
+        email: toEmail(user),
+        password: pass,
+        options: { data: { username: user, phone } },
+      });
+      btn.disabled = false;
+      btn.textContent = 'Create Account';
+      if (error) {
+        if (error.message.includes('already registered')) {
+          return showFormError(this, 'Username already taken');
+        }
+        return showFormError(this, error.message || 'Signup failed');
       }
-    });
-  }
+      showFormSuccess(this, 'Account created! Welcome, ' + user + '!');
+      setTimeout(() => ModalManager.close('loginModal'), 1500);
     });
   }
 
+  // ── Password Reset ──
   const pwForm = document.getElementById('passwordForm');
   if (pwForm) {
     pwForm.addEventListener('submit', function (e) {
