@@ -1,6 +1,6 @@
 /**
  * category.js — Game Category Manager
- * Batman688 Mobile Gaming Platform
+ * iW99 Mobile Gaming Platform
  *
  * Handles:
  *   - Left sidebar category selection & active state
