@@ -111,62 +111,64 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
-     MAIN CONTENT — Left Sidebar + Right Game Grid
+     HORIZONTAL CATEGORY BAR
+══════════════════════════════════════════════════════════ -->
+<div class="category-hscroll" role="navigation" aria-label="Game categories">
+
+  <div class="cat-item active" data-cat="slot" role="button" aria-label="All Slots" tabindex="0">
+    <div class="cat-icon-wrap">🎰</div>
+    <span class="cat-label">အားလုံး</span>
+  </div>
+
+  <div class="cat-item" data-cat="gameshow" role="button" aria-label="Game Show" tabindex="0">
+    <div class="cat-icon-wrap">🎬</div>
+    <span class="cat-label">GameShow</span>
+  </div>
+
+  <div class="cat-item" data-cat="buffalo" role="button" aria-label="Buffalo" tabindex="0">
+    <div class="cat-icon-wrap">🐂</div>
+    <span class="cat-label">Buffalo</span>
+  </div>
+
+  <div class="cat-item" data-cat="arcade" role="button" aria-label="Arcade" tabindex="0">
+    <div class="cat-icon-wrap">🕹️</div>
+    <span class="cat-label">Arcade</span>
+  </div>
+
+  <div class="cat-item" data-cat="favorite" role="button" aria-label="Favorites" tabindex="0">
+    <div class="cat-icon-wrap">❤️</div>
+    <span class="cat-label">တိုက်ကြိုက်</span>
+  </div>
+
+  <div class="cat-item" data-cat="live" role="button" aria-label="Live Casino" tabindex="0">
+    <div class="cat-icon-wrap">📺</div>
+    <span class="cat-label">Live</span>
+  </div>
+
+  <div class="cat-item" data-cat="fish" role="button" aria-label="Fish Games" tabindex="0">
+    <div class="cat-icon-wrap">🐟</div>
+    <span class="cat-label">Fish</span>
+  </div>
+
+  <div class="cat-item" data-cat="sport" role="button" aria-label="Sports" tabindex="0">
+    <div class="cat-icon-wrap">⚽</div>
+    <span class="cat-label">Sport</span>
+  </div>
+
+  <div class="cat-item" data-cat="lottery" role="button" aria-label="Lottery" tabindex="0">
+    <div class="cat-icon-wrap">🎱</div>
+    <span class="cat-label">Lottery</span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN CONTENT — Full Width Game Grid
 ══════════════════════════════════════════════════════════ -->
 <div id="appCapsule">
   <div class="main-content">
 
-    <!-- LEFT CATEGORY SIDEBAR -->
-    <aside class="category-sidebar" aria-label="Game categories">
-
-      <div class="cat-item active" data-cat="slot" role="button" aria-label="All Slots" tabindex="0">
-        <div class="cat-icon-wrap">🎰</div>
-        <span class="cat-label">အားလုံး<br>မူများ</span>
-      </div>
-
-      <div class="cat-item" data-cat="gameshow" role="button" aria-label="Game Show" tabindex="0">
-        <div class="cat-icon-wrap">🎬</div>
-        <span class="cat-label">ဂိမ်း<br>Show</span>
-      </div>
-
-      <div class="cat-item" data-cat="buffalo" role="button" aria-label="Buffalo" tabindex="0">
-        <div class="cat-icon-wrap">🐂</div>
-        <span class="cat-label">BUFFALO</span>
-      </div>
-
-      <div class="cat-item" data-cat="arcade" role="button" aria-label="Arcade" tabindex="0">
-        <div class="cat-icon-wrap">🕹️</div>
-        <span class="cat-label">ARCADE</span>
-      </div>
-
-      <div class="cat-item" data-cat="favorite" role="button" aria-label="Favorites" tabindex="0">
-        <div class="cat-icon-wrap">❤️</div>
-        <span class="cat-label">တိုင်ကြိုက်</span>
-      </div>
-
-      <div class="cat-item" data-cat="live" role="button" aria-label="Live Casino" tabindex="0">
-        <div class="cat-icon-wrap">📺</div>
-        <span class="cat-label">LIVE</span>
-      </div>
-
-      <div class="cat-item" data-cat="fish" role="button" aria-label="Fish Games" tabindex="0">
-        <div class="cat-icon-wrap">🐟</div>
-        <span class="cat-label">FISH</span>
-      </div>
-
-      <div class="cat-item" data-cat="sport" role="button" aria-label="Sports" tabindex="0">
-        <div class="cat-icon-wrap">⚽</div>
-        <span class="cat-label">SPORT</span>
-      </div>
-
-      <div class="cat-item" data-cat="lottery" role="button" aria-label="Lottery" tabindex="0">
-        <div class="cat-icon-wrap">🎱</div>
-        <span class="cat-label">LOTTERY</span>
-      </div>
-
-    </aside>
-
-    <!-- RIGHT GAME GRID (populated by category.js) -->
+    <!-- GAME GRID (populated by category.js) -->
     <section class="game-section" aria-label="Game providers">
       <div class="game-grid" id="gameGrid"></div>
     </section>
