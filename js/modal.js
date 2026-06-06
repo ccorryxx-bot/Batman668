@@ -1,6 +1,6 @@
 /**
  * modal.js — Bottom Sheet Modal Manager
- * Batman688 Mobile Gaming Platform
+ * iW99 Mobile Gaming Platform
  *
  * Handles: open, close, overlay-click-to-close,
  *          bottom-nav active state sync, escape key
