@@ -115,3 +115,12 @@ input, select, textarea {
   body          { max-width: 480px; border-left: 1px solid #1e1e1e; border-right: 1px solid #1e1e1e; }
   .bottom-nav   { max-width: 480px; }
 }
+
+/* ── Header tighten after removing text/icons ── */
+.app-header {
+  padding: 8px 12px !important;
+}
+.banner-wrapper {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
