@@ -53,10 +53,23 @@ const CategoryManager = (function () {
     favorite: [
       { name: 'PG',              img: 'https://images-utils.filev33344411.xyz/websites/batman/game/PG_SLOT.webp', badgeColor: '#ecbf24' },
       { name: 'JILI',            img: null, bg: 'linear-gradient(135deg,#1a0a00,#3a1500)', icon: '🎲', badgeColor: '#ecbf24' },
+      { name: 'PRAGMATIC\nPLAY', img: 'https://images-utils.filev33344411.xyz/websites/batman/game/PP_SLOT.webp', badgeColor: '#ecbf24' },
+      { name: 'CQ9',             img: 'https://images-utils.filev33344411.xyz/websites/batman/game/CQ9.webp',     badgeColor: '#ecbf24' },
     ],
   };
 
-  let activeCategory = 'slot';
+  // ── "All" category — combine all providers ─────────────────
+  PROVIDERS.all = [
+    ...PROVIDERS.slot,
+    ...PROVIDERS.live,
+    ...PROVIDERS.fish,
+    ...PROVIDERS.arcade,
+    ...PROVIDERS.gameshow,
+    ...PROVIDERS.sport,
+    ...PROVIDERS.lottery,
+  ];
+
+  let activeCategory = 'all';
   let gridEl = null;
 
   // ── Init ──────────────────────────────────────────────────
